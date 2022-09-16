@@ -1,0 +1,147 @@
+#include <Ultrasonic.h>
+
+Ultrasonic ultrasonic1(6, 7);
+Ultrasonic ultrasonic2(4, 5);
+
+
+int EnbB = 3 ;
+int inp3 = 26 ;
+int inp4 = 28 ;
+
+int EnbA = 2 ;
+int inp1 = 22 ;
+int inp2 = 24 ;
+
+int Relay = 12 ;
+
+
+void setup() {
+ 
+  pinMode(Relay,OUTPUT);
+  pinMode(EnbB, OUTPUT);
+  pinMode(EnbA, OUTPUT);
+  pinMode(inp1, OUTPUT);
+  pinMode(inp2, OUTPUT);
+  pinMode(inp3, OUTPUT);
+  pinMode(inp4, OUTPUT);
+  
+  Halt();
+}
+
+void loop() {
+
+  
+while(ultrasonic1.read() > 40 && ultrasonic2.read() > 40){
+  
+  Forward();
+  digitalWrite(Relay, HIGH);
+  delay(1000);
+  digitalWrite(Relay, LOW);
+  delay(1000);
+  
+  }
+
+while (ultrasonic1.read() < 40 && ultrasonic2.read() < 40 ){
+
+    Halt();
+    delay(1000);
+    Backward();
+    delay(3000);
+    Left();
+    delay(3000);
+    Forward();
+    delay(1000);
+
+
+} 
+
+
+while (ultrasonic1.read() < 40 && ultrasonic2.read() > 40 ){
+
+  Halt();
+  delay(1000);
+  Left();
+  delay(3000);
+  Forward();
+  delay(2000);
+  Right();
+  delay(3000);
+  Forward();
+  digitalWrite(Relay, HIGH);
+  delay(1000);
+  digitalWrite(Relay, LOW);
+  delay(1000);
+  
+  }
+
+while (ultrasonic1.read() > 40 && ultrasonic2.read() < 40 ){
+
+  Halt();
+  delay(1000);
+  Right();
+  delay(3000);
+  Forward();
+  delay(3000);
+  Left();
+  delay(3000);
+  Forward();
+  digitalWrite(Relay, HIGH);
+  delay(1000);
+  digitalWrite(Relay, LOW);
+  delay(1000);
+  
+  }
+  
+}
+
+void Backward(){
+  
+    analogWrite(EnbB, 220);
+    analogWrite(EnbA, 220);
+    digitalWrite(inp1, LOW);
+    digitalWrite(inp2, HIGH);
+    digitalWrite(inp3, LOW);
+    digitalWrite(inp4, HIGH); 
+  }
+
+void Forward(){
+  
+    analogWrite(EnbB, 220);
+    analogWrite(EnbA, 220);
+    digitalWrite(inp1, HIGH);
+    digitalWrite(inp2, LOW);
+    digitalWrite(inp3, HIGH);
+    digitalWrite(inp4, LOW); 
+    
+}
+void Right(){
+  
+    analogWrite(EnbB, 220);
+    analogWrite(EnbA, 220);
+    digitalWrite(inp1, HIGH);
+    digitalWrite(inp2, LOW);
+    digitalWrite(inp3, LOW);
+    digitalWrite(inp4, HIGH); 
+    
+}
+void Left(){
+
+    analogWrite(EnbB, 220);
+    analogWrite(EnbA, 220);
+    digitalWrite(inp1, LOW);
+    digitalWrite(inp2, HIGH);
+    digitalWrite(inp3, HIGH);
+    digitalWrite(inp4, LOW);
+    
+}
+
+void Halt(){
+
+    analogWrite(EnbB, 0);
+    analogWrite(EnbA, 0);
+    digitalWrite(inp1, LOW);
+    digitalWrite(inp2, LOW);
+    digitalWrite(inp3, LOW);
+    digitalWrite(inp4, LOW);
+    
+  }
